@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#B3C833" >
+
+    <TextView
+        android:id="@+id/news"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:gravity="center"
+        android:text="iGoogleApps info"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#696B5D"
+        android:textSize="30sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/news"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="©2014 iGoogleApps Site Terms of Service Devices Terms of Sale Privacy Policy Developers - info@igoogleapps.com"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#696B5D"
+        android:textSize="16sp" />
+
+</RelativeLayout>
