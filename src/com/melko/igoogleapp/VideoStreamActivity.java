@@ -126,8 +126,8 @@ public class VideoStreamActivity extends BaseActivity {
 		titleIcon.setText(title + "");
 
 		LoadImage loader = new LoadImage(this);
-		loader.loadImageAlphaCache(getIntent().getExtras().getString("IMAGE"),
-				mImage);
+		loader.loadImageRoundedCache(
+				getIntent().getExtras().getString("IMAGE"), mImage, 50);
 
 		mVideoView.setVideoURI(Uri.parse(url));
 		showVideoProgress();

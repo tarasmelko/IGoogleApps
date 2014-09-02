@@ -63,8 +63,6 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				R.id.container);
 		if (frag instanceof HomeFragment) {
 			finish();
-		} else {
-			super.onBackPressed();
 		}
 	}
 
