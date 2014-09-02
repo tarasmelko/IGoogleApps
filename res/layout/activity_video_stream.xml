@@ -29,13 +29,12 @@
 
         <ImageView
             android:id="@+id/fragment_video_streaming_icon_iv"
-            android:layout_width="25dp"
+            android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dp"
             android:layout_toRightOf="@+id/fragment_video_streaming_title_tv"
-            android:scaleType="centerCrop"
-            android:src="@drawable/com_facebook_button_grey_pressed" />
+            android:scaleType="centerCrop" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -70,7 +69,9 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_toLeftOf="@+id/fragment_video_streaming_full_time_tv"
-            android:layout_toRightOf="@+id/fragment_video_streaming_time_progress_tv" />
+            android:layout_toRightOf="@+id/fragment_video_streaming_time_progress_tv"
+            android:background="@drawable/seekbar"
+            android:thumb="@android:color/transparent" />
 
         <TextView
             android:id="@+id/fragment_video_streaming_full_time_tv"
