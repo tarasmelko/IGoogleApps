@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -15,6 +16,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +27,7 @@ import android.widget.TextView;
 import com.melko.igoogleapp.fragments.AccountFragment;
 import com.melko.igoogleapp.fragments.HomeFragment;
 import com.melko.igoogleapp.fragments.MoviesFragment;
+import com.melko.igoogleapp.utils.NetworkUtil;
 
 public class MainActivity extends BaseActivity implements OnClickListener {
 
@@ -112,7 +116,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-
+		Fragment frag = getSupportFragmentManager().findFragmentById(
+				R.id.container);
 		switch (id) {
 		case android.R.id.home:
 			if (mDrawerToggle.isDrawerIndicatorEnabled()) {
@@ -123,6 +128,15 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				}
 			} else {
 				onBackPressed();
+			}
+			break;
+		case R.id.action_user:
+			if (mDrawerLayout.isDrawerOpen(mNavMenu)) {
+				mDrawerLayout.closeDrawer(mNavMenu);
+			}
+			if (!(frag instanceof AccountFragment)) {
+				setBarTitle(R.string.account);
+				replaceFragment(new AccountFragment());
 			}
 			break;
 		}
@@ -148,9 +162,12 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			}
 			break;
 		case R.id.main_account_btn:
-			if (!(frag instanceof AccountFragment)) {
-				setBarTitle(R.string.account);
-				replaceFragment(new AccountFragment());
+			if (NetworkUtil.isNetworkAvaible(MainActivity.this)) {
+				clearAccountData();
+				Intent loginActi = new Intent(MainActivity.this,
+						LoginActivity.class);
+				startActivity(loginActi);
+				finish();
 			}
 			break;
 		}
@@ -160,6 +177,13 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 
 	private void setBarTitle(int id) {
 		getActionBar().setTitle(id);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.bar_items, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 }

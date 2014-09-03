@@ -11,5 +11,8 @@
     <string name="home">Home</string>
     <string name="account">Account</string>
     <string name="app_id">274862416039469</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="gender_">Gender :</string>
+    <string name="email_">Email :</string>
 
 </resources>

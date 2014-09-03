@@ -25,7 +25,8 @@
             android:id="@+id/fragment_video_streaming_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:textSize="17sp" />
 
         <ImageView
             android:id="@+id/fragment_video_streaming_icon_iv"

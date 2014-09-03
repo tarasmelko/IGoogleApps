@@ -42,7 +42,7 @@
             android:layout_height="50dp"
             android:background="@android:color/transparent"
             android:padding="10dp"
-            android:text="@string/account"
+            android:text="Log out"
             android:textColor="#B3C833"
             android:textSize="22sp" />
     </LinearLayout>

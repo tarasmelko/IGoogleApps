@@ -7,11 +7,11 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.SyncStateContract.Constants;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -20,6 +20,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.melko.igoogleapp.utils.Constants;
 import com.melko.igoogleapp.utils.LoadImage;
 
 public class VideoStreamActivity extends BaseActivity {
@@ -39,6 +40,8 @@ public class VideoStreamActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_video_stream);
 		setupView();
@@ -95,8 +98,8 @@ public class VideoStreamActivity extends BaseActivity {
 					}
 				});
 
-		setupDataAndPlay(getIntent().getExtras().getString("URL"), getIntent()
-				.getExtras().getString("TITLE"));
+		setupDataAndPlay(getIntent().getExtras().getString(Constants.MEDIA),
+				getIntent().getExtras().getString(Constants.NAME));
 
 		mPlayStopBtn.setOnClickListener(new OnClickListener() {
 
@@ -127,7 +130,7 @@ public class VideoStreamActivity extends BaseActivity {
 
 		LoadImage loader = new LoadImage(this);
 		loader.loadImageRoundedCache(
-				getIntent().getExtras().getString("IMAGE"), mImage, 50);
+				getIntent().getExtras().getString(Constants.ICON), mImage, 50);
 
 		mVideoView.setVideoURI(Uri.parse(url));
 		showVideoProgress();

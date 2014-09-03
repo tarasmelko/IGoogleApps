@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,10 +13,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.melko.igoogleapp.DescriptionActivity;
 import com.melko.igoogleapp.MainActivity;
 import com.melko.igoogleapp.R;
 import com.melko.igoogleapp.VideoStreamActivity;
 import com.melko.igoogleapp.models.Movie;
+import com.melko.igoogleapp.utils.Constants;
 import com.melko.igoogleapp.utils.LoadImage;
 
 public class MoviesGridAdapter extends BaseAdapter {
@@ -32,6 +35,7 @@ public class MoviesGridAdapter extends BaseAdapter {
 		mInflater = LayoutInflater.from(context);
 		mContext = context;
 		mData = in;
+		Log.e("ADAPTER", mData.size() + " :size");
 		mLoader = new LoadImage(mContext);
 	}
 
@@ -87,10 +91,11 @@ public class MoviesGridAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				Intent movie = new Intent(mContext, VideoStreamActivity.class);
-				movie.putExtra("URL", item.getVideo_url());
-				movie.putExtra("TITLE", item.getName());
-				movie.putExtra("IMAGE", item.getIcon_url());
+				Intent movie = new Intent(((MainActivity) mContext),
+						VideoStreamActivity.class);
+				movie.putExtra(Constants.MEDIA, item.getVideo_url());
+				movie.putExtra(Constants.NAME, item.getName());
+				movie.putExtra(Constants.ICON, item.getIcon_url());
 				((MainActivity) mContext).startActivity(movie);
 			}
 		});

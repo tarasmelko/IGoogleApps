@@ -6,8 +6,11 @@
         res/values-v11/styles.xml on API 14+ devices.
     -->
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-       
         <item name="android:windowActionBar">true</item>
+    </style>
+
+    <style name="Theme.NoTitle" parent="android:Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowActionBar">false</item>
     </style>
 
 </resources>
