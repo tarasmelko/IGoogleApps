@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/action_user"
-        android:icon="@drawable/member"
+        android:icon="@drawable/settings"
         android:showAsAction="always"
         android:title="@string/account"/>
 

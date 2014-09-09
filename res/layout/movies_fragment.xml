@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#323232" >
 
     <GridView
         android:id="@+id/fragment_movie_gv"
@@ -8,7 +9,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:horizontalSpacing="5dp"
-        android:numColumns="2"
+        android:numColumns="4"
         android:verticalSpacing="5dp" >
     </GridView>
 

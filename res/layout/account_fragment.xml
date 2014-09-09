@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B3C833" >
+    android:background="#323232" >
 
     <TextView
         android:id="@+id/usermane"
@@ -11,7 +11,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="26dp"
         android:gravity="center"
-        android:text="Taras Melko"
+        android:text="no info"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#ffffff"
         android:textSize="25sp" />

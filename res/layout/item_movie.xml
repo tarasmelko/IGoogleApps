@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:background="#EAF1BF"
+        android:layout_height="240dp"
+        android:background="@android:color/transparent"
         android:orientation="vertical" >
 
         <ImageView
@@ -24,9 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:gravity="center"
+            android:gravity="left"
             android:text=""
-            android:textColor="#8A8E72" />
+            android:textColor="#ffffff" />
     </LinearLayout>
 
 </RelativeLayout>

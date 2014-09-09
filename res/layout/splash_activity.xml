@@ -1,17 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B3C833" >
+    android:background="#000000" >
 
-    <TextView
-        android:id="@+id/igoogle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-       android:layout_centerInParent="true"
-        android:gravity="center"
-        android:text="iGoogleApps Production"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#696B5D"
-        android:textSize="60sp" />
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/splash" />
 
 </RelativeLayout>
