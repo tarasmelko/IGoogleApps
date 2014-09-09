@@ -19,8 +19,8 @@ public class IGoogleAppApplication extends Application {
 		mApp = this;
 		Preference.getSharedPreferences();
 		initImageLoader(getApplicationContext());
-		Parse.initialize(this, "CLNtgAwrmiCbbHOVfrvLskirkuNSly4XEYj8cFx8",
-				"3fWg5qllrPCsiT6g5DOWUHb2XZ8YUm84CxsDNhHZ");
+		Parse.initialize(this, "JP9GO2D8VFX4AWdA2YBoVfyv0C8G5dFfbMOtoiTa",
+				"kzCSeedv2IX4fqvMWM6dwxZZ06AwJkHLPYlMJwbu");
 		ParseFacebookUtils.initialize("274862416039469");
 		super.onCreate();
 

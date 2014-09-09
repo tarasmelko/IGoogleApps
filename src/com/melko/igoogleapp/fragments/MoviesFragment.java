@@ -3,7 +3,6 @@ package com.melko.igoogleapp.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,7 +23,7 @@ import com.parse.ParseUser;
 public class MoviesFragment extends Fragment {
 
 	GridView moviesGrid;
-	ArrayList<Movie> mData = new ArrayList<Movie>();
+	ArrayList<Movie> mData;
 	MoviesGridAdapter adapter;
 	View mView;
 
@@ -34,45 +33,24 @@ public class MoviesFragment extends Fragment {
 		mView = inflater.inflate(R.layout.movies_fragment, container, false);
 
 		moviesGrid = (GridView) mView.findViewById(R.id.fragment_movie_gv);
+		mData = new ArrayList<Movie>();
 		adapter = new MoviesGridAdapter(getActivity(), mData);
 		moviesGrid.setAdapter(adapter);
 		if (NetworkUtil.isNetworkAvaible(getActivity()))
-			new LoadDataClass().execute();
-
+			getData();
+		
 		return mView;
 	}
 
-	private class LoadDataClass extends AsyncTask<String, String, String> {
-
-		@Override
-		protected void onPreExecute() {
-			showVideoProgress();
-			super.onPreExecute();
-		}
-
-		@Override
-		protected String doInBackground(String... params) {
-			getData();
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-		}
-
-	}
-
 	private void getData() {
-		mData.clear();
+		showVideoProgress();
 		if (ParseUser.getCurrentUser() != null) {
-			ParseQuery<ParseObject> query = ParseQuery.getQuery("Movie");
+			ParseQuery<ParseObject> query = ParseQuery.getQuery("Movies");
 			query.findInBackground(new FindCallback<ParseObject>() {
-				@SuppressWarnings("unchecked")
 				public void done(List<ParseObject> movies, ParseException e) {
 					if (e == null) {
 						if (movies.size() > 0) {
-							new FillDataClass().execute(movies);
+							fillList(movies);
 						} else {
 							stopVideoProgress();
 						}
@@ -80,13 +58,11 @@ public class MoviesFragment extends Fragment {
 						stopVideoProgress();
 					}
 				}
-
 			});
 
 		} else {
 			stopVideoProgress();
 		}
-
 	}
 
 	private void fillList(List<ParseObject> movies) {
@@ -98,31 +74,8 @@ public class MoviesFragment extends Fragment {
 			movItem.setIcon_url(item.getString("icon_url"));
 			mData.add(movItem);
 		}
-	}
-
-	private class FillDataClass extends
-			AsyncTask<List<ParseObject>, String, String> {
-
-		@Override
-		protected void onPreExecute() {
-
-			super.onPreExecute();
-		}
-
-		@SuppressWarnings("unchecked")
-		@Override
-		protected String doInBackground(List<ParseObject>... params) {
-			fillList(params[0]);
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			adapter.notifyDataSetChanged();
-			stopVideoProgress();
-			super.onPostExecute(result);
-		}
-
+		adapter.notifyDataSetChanged();
+		stopVideoProgress();
 	}
 
 	public void showVideoProgress() {

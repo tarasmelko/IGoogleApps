@@ -3,8 +3,6 @@ package com.melko.igoogleapp.adapters;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,12 +11,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.melko.igoogleapp.DescriptionActivity;
 import com.melko.igoogleapp.MainActivity;
 import com.melko.igoogleapp.R;
-import com.melko.igoogleapp.VideoStreamActivity;
+import com.melko.igoogleapp.fragments.DescriptionFragment;
 import com.melko.igoogleapp.models.Movie;
-import com.melko.igoogleapp.utils.Constants;
 import com.melko.igoogleapp.utils.LoadImage;
 
 public class MoviesGridAdapter extends BaseAdapter {
@@ -35,7 +31,6 @@ public class MoviesGridAdapter extends BaseAdapter {
 		mInflater = LayoutInflater.from(context);
 		mContext = context;
 		mData = in;
-		Log.e("ADAPTER", mData.size() + " :size");
 		mLoader = new LoadImage(mContext);
 	}
 
@@ -72,8 +67,6 @@ public class MoviesGridAdapter extends BaseAdapter {
 					.findViewById(R.id.item_movie_name_tv);
 			holder.image = (ImageView) convertView
 					.findViewById(R.id.item_movie_image_iv);
-			// holder.descpription = (TextView) convertView
-			// .findViewById(R.id.fragment_member_name_tv);
 
 			convertView.setTag(holder);
 		} else {
@@ -83,7 +76,7 @@ public class MoviesGridAdapter extends BaseAdapter {
 
 		final Movie item = (Movie) mData.get(position);
 
-		mLoader.loadImageAlphaCache(item.getIcon_url(), holder.image);
+		mLoader.loadImageRoundedCache(item.getIcon_url(), holder.image, 10);
 		holder.name.setText(item.getName() != null ? item.getName()
 				: NO_INFORMATION);
 
@@ -91,12 +84,10 @@ public class MoviesGridAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				Intent movie = new Intent(((MainActivity) mContext),
-						VideoStreamActivity.class);
-				movie.putExtra(Constants.MEDIA, item.getVideo_url());
-				movie.putExtra(Constants.NAME, item.getName());
-				movie.putExtra(Constants.ICON, item.getIcon_url());
-				((MainActivity) mContext).startActivity(movie);
+				((MainActivity) mContext).addFragment(DescriptionFragment
+						.instance(item.getIcon_url(), item.getVideo_url(),
+								item.getDescription(), item.getName()));
+
 			}
 		});
 

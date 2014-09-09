@@ -3,13 +3,11 @@ package com.melko.igoogleapp;
 import java.util.Arrays;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.facebook.Request;
 import com.facebook.model.GraphUser;
@@ -27,9 +25,6 @@ public class LoginActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login_activity);
-		Typeface cool = Typeface.createFromAsset(getAssets(), "fonts/cool.ttf");
-
-		((TextView) findViewById(R.id.login_tv)).setTypeface(cool);
 
 		((ImageView) findViewById(R.id.facebook_iv))
 				.setOnClickListener(new OnClickListener() {
@@ -76,7 +71,6 @@ public class LoginActivity extends BaseActivity {
 					public void onCompleted(GraphUser user,
 							com.facebook.Response response) {
 						if (user != null) {
-
 							ParseUser.getCurrentUser().put("firstname",
 									user.getFirstName() + "");
 							ParseUser.getCurrentUser().put("lastname",
@@ -121,11 +115,7 @@ public class LoginActivity extends BaseActivity {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
-		if (ParseUser.getCurrentUser() != null) {
-			((TextView) findViewById(R.id.login_tv)).setText("Wait...");
-			((ImageView) findViewById(R.id.facebook_iv))
-					.setImageResource(R.drawable.wait);
-		}
+
 	}
 
 	private void saveData(String userId) {

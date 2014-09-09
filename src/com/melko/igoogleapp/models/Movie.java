@@ -7,6 +7,7 @@ public class Movie {
 	private String icon_url;
 	private String date;
 	private String video_url;
+	private int position;
 
 	public String getName() {
 		return name;
@@ -46,5 +47,13 @@ public class Movie {
 
 	public void setVideo_url(String video_url) {
 		this.video_url = video_url;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
 	}
 }

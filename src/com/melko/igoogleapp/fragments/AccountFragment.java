@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.melko.igoogleapp.MainActivity;
 import com.melko.igoogleapp.R;
 import com.melko.igoogleapp.utils.LoadImage;
 import com.melko.igoogleapp.utils.NetworkUtil;
@@ -56,6 +57,18 @@ public class AccountFragment extends Fragment {
 		}
 	}
 
+	@Override
+	public void onResume() {
+		((MainActivity) getActivity()).setBackButton();
+		super.onResume();
+	}
+
+	@Override
+	public void onStop() {
+		((MainActivity) getActivity()).setMenu();
+		super.onResume();
+	}
+
 	private class LoadDataClass extends AsyncTask<String, String, String> {
 
 		@Override
@@ -73,8 +86,8 @@ public class AccountFragment extends Fragment {
 		@Override
 		protected void onPostExecute(String result) {
 			LoadImage loader = new LoadImage(getActivity());
-			loader.loadImageRoundedCache(photo_url,
-					((ImageView) mView.findViewById(R.id.usericon)), 150);
+			loader.loadImageAlphaCache(photo_url,
+					((ImageView) mView.findViewById(R.id.usericon)));
 			((TextView) mView.findViewById(R.id.usermane)).setText(username
 					+ "");
 			((TextView) mView.findViewById(R.id.gendertype)).setText(gender
