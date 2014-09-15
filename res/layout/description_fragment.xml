@@ -26,25 +26,11 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/movie_name"
-        android:layout_below="@+id/movie_name"
-        android:layout_margin="5dp"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:text="Description : "
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="#696B5D"
-        android:textSize="14sp" />
-
-    <TextView
         android:id="@+id/description_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/TextView01"
+        android:layout_below="@+id/movie_name"
         android:layout_margin="5dp"
         android:layout_toRightOf="@+id/movie_icon"
         android:gravity="left"
@@ -79,7 +65,7 @@
         android:background="@drawable/ic_watch"
         android:text="WATCH IT NOW"
         android:textColor="#284651"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
 </RelativeLayout>
