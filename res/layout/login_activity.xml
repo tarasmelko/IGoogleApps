@@ -3,12 +3,11 @@
     android:layout_height="match_parent"
     android:background="#000000" >
 
-    <ImageView
-        android:id="@+id/facebook_iv"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+    <com.facebook.widget.LoginButton
+        android:id="@+id/loginBotton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/cutted_f" />
+        android:layout_centerVertical="true" />
 
 </RelativeLayout>
