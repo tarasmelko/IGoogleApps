@@ -13,6 +13,9 @@ import android.content.pm.Signature;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.melko.igoogleapp.utils.Preference;
 
@@ -39,6 +42,12 @@ public class SplashActivity extends BaseActivity {
 		} catch (NoSuchAlgorithmException e) {
 
 		}
+		
+		ImageView animationTarget = (ImageView) this.findViewById(R.id.spalsh_iv);
+
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        animationTarget.startAnimation(animation);
+		
 		mSplashTime = new Timer();
 
 		TimerTask launchMainActivity = new TimerTask() {
