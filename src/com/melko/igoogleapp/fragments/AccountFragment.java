@@ -3,7 +3,6 @@ package com.melko.igoogleapp.fragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.melko.igoogleapp.MainActivity;
 import com.melko.igoogleapp.R;
 import com.melko.igoogleapp.utils.LoadImage;
 import com.melko.igoogleapp.utils.NetworkUtil;
-import com.parse.ParseUser;
 
 public class AccountFragment extends Fragment {
 
@@ -29,32 +27,10 @@ public class AccountFragment extends Fragment {
 			Bundle savedInstanceState) {
 		mView = inflater.inflate(R.layout.account_fragment, container, false);
 
-		if (NetworkUtil.isNetworkAvaible(getActivity()))
-			new LoadDataClass().execute();
+		// if (NetworkUtil.isNetworkAvaible(getActivity()))
+		// new LoadDataClass().execute();
 
 		return mView;
-	}
-
-	private void getData() {
-		if (ParseUser.getCurrentUser() != null) {
-			username = ParseUser.getCurrentUser().get("firstname") != null
-					&& ParseUser.getCurrentUser().get("lastname") != null ? ParseUser
-					.getCurrentUser().get("firstname").toString()
-					+ " "
-					+ ParseUser.getCurrentUser().get("lastname").toString()
-					: "None";
-			gender = ParseUser.getCurrentUser().get("gender") != null ? ParseUser
-					.getCurrentUser().get("gender").toString()
-					: "None";
-			email = ParseUser.getCurrentUser().get("email") != null ? ParseUser
-					.getCurrentUser().get("email").toString() : "None";
-			photo_url = ParseUser.getCurrentUser().get("photo_url") != null ? ParseUser
-					.getCurrentUser().get("photo_url").toString()
-					: "";
-
-		} else {
-			Log.e("USER", "IS NULL");
-		}
 	}
 
 	@Override
@@ -79,7 +55,6 @@ public class AccountFragment extends Fragment {
 
 		@Override
 		protected String doInBackground(String... params) {
-			getData();
 			return null;
 		}
 

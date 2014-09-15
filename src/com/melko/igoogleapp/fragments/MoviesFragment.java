@@ -1,10 +1,10 @@
 package com.melko.igoogleapp.fragments;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +13,7 @@ import android.widget.GridView;
 import com.melko.igoogleapp.R;
 import com.melko.igoogleapp.adapters.MoviesGridAdapter;
 import com.melko.igoogleapp.models.Movie;
-import com.melko.igoogleapp.utils.NetworkUtil;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
+import com.melko.igoogleapp.utils.Preference;
 
 public class MoviesFragment extends Fragment {
 
@@ -36,46 +31,11 @@ public class MoviesFragment extends Fragment {
 		mData = new ArrayList<Movie>();
 		adapter = new MoviesGridAdapter(getActivity(), mData);
 		moviesGrid.setAdapter(adapter);
-		if (NetworkUtil.isNetworkAvaible(getActivity()))
-			getData();
-		
+		// if (NetworkUtil.isNetworkAvaible(getActivity()))
+		// getData();
+
+		Log.e("FILMS", Preference.getUserFilms());
 		return mView;
-	}
-
-	private void getData() {
-		showVideoProgress();
-		if (ParseUser.getCurrentUser() != null) {
-			ParseQuery<ParseObject> query = ParseQuery.getQuery("Movies");
-			query.findInBackground(new FindCallback<ParseObject>() {
-				public void done(List<ParseObject> movies, ParseException e) {
-					if (e == null) {
-						if (movies.size() > 0) {
-							fillList(movies);
-						} else {
-							stopVideoProgress();
-						}
-					} else {
-						stopVideoProgress();
-					}
-				}
-			});
-
-		} else {
-			stopVideoProgress();
-		}
-	}
-
-	private void fillList(List<ParseObject> movies) {
-		for (ParseObject item : movies) {
-			Movie movItem = new Movie();
-			movItem.setVideo_url(item.getString("video_url"));
-			movItem.setName(item.getString("name"));
-			movItem.setDescription(item.getString("description"));
-			movItem.setIcon_url(item.getString("icon_url"));
-			mData.add(movItem);
-		}
-		adapter.notifyDataSetChanged();
-		stopVideoProgress();
 	}
 
 	public void showVideoProgress() {

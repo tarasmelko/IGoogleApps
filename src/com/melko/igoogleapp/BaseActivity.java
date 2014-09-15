@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 
+import com.facebook.Session;
 import com.melko.igoogleapp.utils.Preference;
-import com.parse.ParseFacebookUtils;
-import com.parse.ParseUser;
 
 public class BaseActivity extends FragmentActivity {
 
@@ -47,12 +45,7 @@ public class BaseActivity extends FragmentActivity {
 
 	public void clearAccountData() {
 		Preference.saveUserId("");
-		if (ParseFacebookUtils.getSession() != null
-				&& ParseFacebookUtils.getSession().isOpened()) {
-			ParseFacebookUtils.getSession().closeAndClearTokenInformation();
-		} else {
-			Log.e("FACEBOOK", "NULL SESSION");
-		}
-		ParseUser.logOut();
+		if (Session.getActiveSession().isOpened())
+			Session.getActiveSession().closeAndClearTokenInformation();
 	}
 }
