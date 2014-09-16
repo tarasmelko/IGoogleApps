@@ -4,10 +4,8 @@ public class Movie {
 
 	private String name;
 	private String description;
-	private String icon_url;
-	private String date;
-	private String video_url;
-	private int position;
+	private String image;
+	private String files;
 
 	public String getName() {
 		return name;
@@ -25,35 +23,20 @@ public class Movie {
 		this.description = description;
 	}
 
-	public String getIcon_url() {
-		return icon_url;
+	public String getImage() {
+		return image;
 	}
 
-	public void setIcon_url(String icon_url) {
-		this.icon_url = icon_url;
+	public void setImage(String image) {
+		this.image = image;
 	}
 
-	public String getDate() {
-		return date;
+	public String getFiles() {
+		return files;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setFiles(String files) {
+		this.files = files;
 	}
 
-	public String getVideo_url() {
-		return video_url;
-	}
-
-	public void setVideo_url(String video_url) {
-		this.video_url = video_url;
-	}
-
-	public int getPosition() {
-		return position;
-	}
-
-	public void setPosition(int position) {
-		this.position = position;
-	}
 }

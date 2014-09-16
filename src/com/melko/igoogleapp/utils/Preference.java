@@ -14,7 +14,8 @@ public class Preference {
 	private static final String USER_PIC = "pic";
 	private static final String USER_EMAIL = "email";
 	private static final String USER_GENDER = "gender";
-
+	private static final String USER_LASTNAME = "lastname";
+	private static final String REG_ID = "reg_id";
 	private static SharedPreferences sharedPreferences = null;
 
 	public static SharedPreferences getSharedPreferences() {
@@ -25,6 +26,7 @@ public class Preference {
 		return sharedPreferences;
 	}
 
+	// id
 	public synchronized static void saveUserId(String userId) {
 		SharedPreferences.Editor editor = getSharedPreferences().edit();
 		editor.putString(USER_ID, userId);
@@ -34,6 +36,20 @@ public class Preference {
 	public synchronized static String getUserId() {
 		return getSharedPreferences().getString(USER_ID, "");
 	}
+
+	//
+	// reg id
+	public synchronized static void saveUserRegistrationId(String userId) {
+		SharedPreferences.Editor editor = getSharedPreferences().edit();
+		editor.putString(REG_ID, userId);
+		editor.commit();
+	}
+
+	public synchronized static String getRegistrationId() {
+		return getSharedPreferences().getString(REG_ID, "");
+	}
+
+	//
 
 	public synchronized static void saveUserEmail(String email) {
 		SharedPreferences.Editor editor = getSharedPreferences().edit();
@@ -48,6 +64,16 @@ public class Preference {
 	public synchronized static void saveUserName(String name) {
 		SharedPreferences.Editor editor = getSharedPreferences().edit();
 		editor.putString(USER_NAME, name);
+		editor.commit();
+	}
+
+	public synchronized static String getUserLastName() {
+		return getSharedPreferences().getString(USER_LASTNAME, "");
+	}
+
+	public synchronized static void saveUserLastName(String name) {
+		SharedPreferences.Editor editor = getSharedPreferences().edit();
+		editor.putString(USER_LASTNAME, name);
 		editor.commit();
 	}
 

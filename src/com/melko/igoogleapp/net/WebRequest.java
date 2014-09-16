@@ -1,8 +1,7 @@
 package com.melko.igoogleapp.net;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 
@@ -31,25 +30,33 @@ public class WebRequest {
 	}
 
 	public void login(String firstname, String lastname, String gender,
-			String iconURL, String email,
-			Response.Listener<JSONArray> listener, Response.ErrorListener error) {
+			String iconURL, String email, Response.Listener<String> listener,
+			Response.ErrorListener error) {
+		//
+		// JSONObject requestBody = new JSONObject();
+		// try {
+		// requestBody.putOpt("name", firstname);
+		// requestBody.putOpt("lastname", lastname);
+		// requestBody.putOpt("gender", gender);
+		// requestBody.putOpt("picture", iconURL);
+		// requestBody.putOpt("email", email);
+		//
+		// } catch (JSONException e) {
+		// e.printStackTrace();
+		// }
 
-		JSONObject requestBody = new JSONObject();
-		try {
-			requestBody.putOpt("name", firstname);
-			requestBody.putOpt("lastname", lastname);
-			requestBody.putOpt("gender", gender);
-			requestBody.putOpt("picture", iconURL);
-			requestBody.putOpt("email", email);
-
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-		RequestWithArray createUser = new RequestWithArray(
-				requestBody.toString(), null, Request.Method.POST,
-				ACTION_SIGNIN, listener, error);
-		mQueue.add(createUser);
+		// RequestWithArray createUser = new RequestWithArray(
+		// requestBody.toString(), null, Request.Method.POST,
+		// ACTION_SIGNIN, listener, error);
+		Map<String, String> mParams = new HashMap<String, String>();
+		mParams.put("name", firstname);
+		mParams.put("lastname", lastname);
+		mParams.put("gender", gender);
+		mParams.put("picture", iconURL);
+		mParams.put("email", email);
+		StringPostRequest reqeust = new StringPostRequest(Request.Method.POST,
+				ACTION_SIGNIN, listener, error, mParams);
+		mQueue.add(reqeust);
 	}
 
 }

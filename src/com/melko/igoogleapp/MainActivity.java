@@ -2,7 +2,6 @@ package com.melko.igoogleapp;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
@@ -13,12 +12,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.melko.igoogleapp.fragments.AccountFragment;
 import com.melko.igoogleapp.fragments.DescriptionFragment;
 import com.melko.igoogleapp.fragments.MoviesFragment;
-import com.melko.igoogleapp.utils.NetworkUtil;
+import com.melko.igoogleapp.fragments.SearchFragment;
 
 @SuppressLint("NewApi")
 public class MainActivity extends BaseActivity implements OnClickListener {
@@ -118,10 +116,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void initSliderElements() {
-		TextView movies = (TextView) findViewById(R.id.main_movies_btn);
-		movies.setOnClickListener(this);
-		TextView account = (TextView) findViewById(R.id.main_account_btn);
-		account.setOnClickListener(this);
+		findViewById(R.id.main_movies_btn).setOnClickListener(this);
+		findViewById(R.id.main_search_btn).setOnClickListener(this);
+		findViewById(R.id.nav_drawer).setOnClickListener(this);
 	}
 
 	private void initDrawerSlider() {
@@ -158,14 +155,9 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 				replaceFragment(new MoviesFragment());
 			}
 			break;
-
-		case R.id.main_account_btn:
-			if (NetworkUtil.isNetworkAvaible(MainActivity.this)) {
-				clearAccountData();
-				Intent loginActi = new Intent(MainActivity.this,
-						LoginActivity.class);
-				startActivity(loginActi);
-				finish();
+		case R.id.main_search_btn:
+			if (!(frag instanceof SearchFragment)) {
+				replaceFragment(new SearchFragment());
 			}
 			break;
 		}

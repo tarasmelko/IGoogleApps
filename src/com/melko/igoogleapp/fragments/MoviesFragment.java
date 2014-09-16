@@ -1,6 +1,10 @@
 package com.melko.igoogleapp.fragments;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,16 +13,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.facebook.Session;
+import com.google.android.gms.drive.internal.ad;
 import com.melko.igoogleapp.R;
 import com.melko.igoogleapp.adapters.MoviesGridAdapter;
 import com.melko.igoogleapp.models.Movie;
+import com.melko.igoogleapp.net.Parser;
+import com.melko.igoogleapp.net.WebRequest;
+import com.melko.igoogleapp.utils.NetworkUtil;
 import com.melko.igoogleapp.utils.Preference;
 
 public class MoviesFragment extends Fragment {
 
 	GridView moviesGrid;
-	ArrayList<Movie> mData;
+	List<Movie> mData;
 	MoviesGridAdapter adapter;
 	View mView;
 
@@ -29,12 +40,9 @@ public class MoviesFragment extends Fragment {
 
 		moviesGrid = (GridView) mView.findViewById(R.id.fragment_movie_gv);
 		mData = new ArrayList<Movie>();
-		adapter = new MoviesGridAdapter(getActivity(), mData);
-		moviesGrid.setAdapter(adapter);
-		// if (NetworkUtil.isNetworkAvaible(getActivity()))
-		// getData();
 
-		Log.e("FILMS", Preference.getUserFilms());
+		if (NetworkUtil.isNetworkAvaible(getActivity()))
+			getDataAgain();
 		return mView;
 	}
 
@@ -48,4 +56,39 @@ public class MoviesFragment extends Fragment {
 		mView.findViewById(R.id.main_pb).setVisibility(View.GONE);
 	}
 
+	private void getDataAgain() {
+		showVideoProgress();
+		WebRequest request = new WebRequest(getActivity());
+		request.login(Preference.getUserName(), Preference.getUserLastName(),
+				Preference.getUserGender(), Preference.getUserPictue(),
+				Preference.getUserEmail(),
+				new com.android.volley.Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						stopVideoProgress();
+
+						if (response != null) {
+							Preference.saveUserFilms(response);
+							try {
+								mData = Parser.feeds(response);
+							} catch (Exception e) {
+								Toast.makeText(getActivity(), "Server error",
+										Toast.LENGTH_SHORT).show();
+							}
+							adapter = new MoviesGridAdapter(getActivity(),
+									mData);
+							moviesGrid.setAdapter(adapter);
+						}
+					}
+				}, new com.android.volley.Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						stopVideoProgress();
+						Log.e("RESPONSE", "error" + error.toString());
+						if (Session.getActiveSession().isOpened())
+							Session.getActiveSession()
+									.closeAndClearTokenInformation();
+					}
+				});
+	}
 }

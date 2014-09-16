@@ -1,6 +1,6 @@
 package com.melko.igoogleapp.adapters;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,19 +15,20 @@ import com.melko.igoogleapp.MainActivity;
 import com.melko.igoogleapp.R;
 import com.melko.igoogleapp.fragments.DescriptionFragment;
 import com.melko.igoogleapp.models.Movie;
+import com.melko.igoogleapp.utils.Constants;
 import com.melko.igoogleapp.utils.LoadImage;
 
 public class MoviesGridAdapter extends BaseAdapter {
 
 	private Context mContext;
 
-	private ArrayList<Movie> mData;
+	private List<Movie> mData;
 
 	private LayoutInflater mInflater;
 	private static final String NO_INFORMATION = "No information";
 	private LoadImage mLoader;
 
-	public MoviesGridAdapter(Context context, ArrayList<Movie> in) {
+	public MoviesGridAdapter(Context context, List<Movie> in) {
 		mInflater = LayoutInflater.from(context);
 		mContext = context;
 		mData = in;
@@ -76,7 +77,8 @@ public class MoviesGridAdapter extends BaseAdapter {
 
 		final Movie item = (Movie) mData.get(position);
 
-		mLoader.loadImageRoundedCache(item.getIcon_url(), holder.image, 10);
+		mLoader.loadImageRoundedCache(Constants.ICON_PREFIX + item.getImage(),
+				holder.image, 10);
 		holder.name.setText(item.getName() != null ? item.getName()
 				: NO_INFORMATION);
 
@@ -85,7 +87,8 @@ public class MoviesGridAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				((MainActivity) mContext).addFragment(DescriptionFragment
-						.instance(item.getIcon_url(), item.getVideo_url(),
+						.instance(Constants.ICON_PREFIX + item.getImage(),
+								Constants.VIDEO_PREFIX + item.getFiles(),
 								item.getDescription(), item.getName()));
 
 			}

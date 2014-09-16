@@ -43,9 +43,4 @@ public class BaseActivity extends FragmentActivity {
 		transaction.commit();
 	}
 
-	public void clearAccountData() {
-		Preference.saveUserId("");
-		if (Session.getActiveSession().isOpened())
-			Session.getActiveSession().closeAndClearTokenInformation();
-	}
 }

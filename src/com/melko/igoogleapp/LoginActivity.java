@@ -1,11 +1,8 @@
 package com.melko.igoogleapp;
 
-import org.json.JSONArray;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import com.android.volley.VolleyError;
 import com.facebook.Request;
@@ -13,9 +10,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
-import com.facebook.widget.LoginButton;
 import com.melko.igoogleapp.net.WebRequest;
-import com.melko.igoogleapp.utils.NetworkUtil;
 import com.melko.igoogleapp.utils.Preference;
 
 public class LoginActivity extends BaseActivity {
@@ -26,6 +21,7 @@ public class LoginActivity extends BaseActivity {
 	private String email = null;
 	private String gender = null;
 	private UiLifecycleHelper uiHelper;
+
 	private Session.StatusCallback callback = new Session.StatusCallback() {
 		@Override
 		public void call(final Session session, final SessionState state,
@@ -40,8 +36,6 @@ public class LoginActivity extends BaseActivity {
 		setContentView(R.layout.login_activity);
 		uiHelper = new UiLifecycleHelper(this, callback);
 		uiHelper.onCreate(savedInstanceState);
-		LoginButton authButton = (LoginButton) findViewById(R.id.loginBotton);
-
 	}
 
 	@Override
@@ -63,7 +57,7 @@ public class LoginActivity extends BaseActivity {
 								last_name = user.getLastName() + "";
 
 								photo_url = "https://graph.facebook.com/"
-										+ user.getId() + "/picture";
+										+ user.getId() + "/picture?type=large";
 
 								email = user.asMap().get("email") != null ? user
 										.asMap().get("email").toString()
@@ -131,11 +125,11 @@ public class LoginActivity extends BaseActivity {
 	private void makeLoginRequest() {
 		WebRequest request = new WebRequest(this);
 		request.login(first_name, last_name, gender, photo_url, email,
-				new com.android.volley.Response.Listener<JSONArray>() {
+				new com.android.volley.Response.Listener<String>() {
 					@Override
-					public void onResponse(JSONArray response) {
+					public void onResponse(String response) {
+						Log.e("RESPONSE", "resp" + response.toString());
 						if (response != null) {
-							Log.e("RESPONSE", response.toString());
 							saveData(response.toString());
 						}
 					}
@@ -155,7 +149,8 @@ public class LoginActivity extends BaseActivity {
 		Preference.saveUserId(userID);
 		Preference.saveUserEmail(email);
 		Preference.saveUserGender(gender);
-		Preference.saveUserName(first_name + " " + last_name);
+		Preference.saveUserName(first_name);
+		Preference.saveUserLastName(last_name);
 		Preference.saveUserPicture(photo_url);
 		Intent loginActi = new Intent(LoginActivity.this, MainActivity.class);
 		startActivity(loginActi);

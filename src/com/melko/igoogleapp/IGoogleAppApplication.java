@@ -15,7 +15,7 @@ public class IGoogleAppApplication extends Application {
 	public void onCreate() {
 		mApp = this;
 		super.onCreate();
-
+		initImageLoader(this);
 	}
 
 	public static void initImageLoader(Context context) {
