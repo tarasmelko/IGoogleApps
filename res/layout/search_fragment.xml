@@ -1,0 +1,68 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#323232" >
+
+    <GridView
+        android:id="@+id/fragment_search_gv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/fragemnt_search_rl"
+        android:gravity="center"
+        android:horizontalSpacing="5dp"
+        android:numColumns="4"
+        android:verticalSpacing="5dp" >
+    </GridView>
+
+    <ImageView
+        android:id="@+id/main_search_shadow_iv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#44999999"
+        android:clickable="true"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/main_search_pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/fragemnt_search_rl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/fragemnt_search_et"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:layout_toLeftOf="@+id/fragemnt_search_btn"
+            android:background="@drawable/ic_search_button"
+            android:ems="10"
+            android:hint=""
+            android:maxLength="50"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="40dp"
+            android:paddingTop="5dp"
+            android:textColor="#929292" >
+
+            <requestFocus />
+        </EditText>
+
+        <ImageView
+            android:id="@+id/fragemnt_search_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/search" />
+    </RelativeLayout>
+
+</RelativeLayout>
