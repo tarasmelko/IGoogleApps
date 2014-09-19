@@ -5,9 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
-import com.facebook.Session;
-import com.melko.igoogleapp.utils.Preference;
-
 public class BaseActivity extends FragmentActivity {
 
 	@Override

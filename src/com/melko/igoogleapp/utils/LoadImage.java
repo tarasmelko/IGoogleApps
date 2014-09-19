@@ -34,7 +34,7 @@ public class LoadImage {
 		mOptionsBuilderCacheAlpha = new Builder()
 				.showImageForEmptyUri(R.drawable.ic_launcher)
 				.resetViewBeforeLoading(true)
-				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+				.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
 				.showImageOnFail(R.drawable.ic_launcher)
 				.considerExifParams(true).cacheInMemory(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).cacheOnDisk(true);
@@ -42,7 +42,7 @@ public class LoadImage {
 		mOptionsBuilderCacheRound = new Builder()
 				.showImageForEmptyUri(R.drawable.ic_launcher)
 				.resetViewBeforeLoading(true)
-				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+				.imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2)
 				.showImageOnFail(R.drawable.ic_launcher)
 				.considerExifParams(true).cacheInMemory(true)
 				.bitmapConfig(Bitmap.Config.RGB_565).cacheOnDisk(true);
