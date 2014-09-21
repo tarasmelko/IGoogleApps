@@ -4,17 +4,25 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Response.ErrorListener;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
 import com.facebook.Session;
 import com.melko.igoogleapp.LoginActivity;
 import com.melko.igoogleapp.MainActivity;
 import com.melko.igoogleapp.R;
+import com.melko.igoogleapp.net.WebRequest;
 import com.melko.igoogleapp.utils.LoadImage;
 import com.melko.igoogleapp.utils.NetworkUtil;
 import com.melko.igoogleapp.utils.Preference;
@@ -45,11 +53,60 @@ public class AccountFragment extends Fragment {
 						}
 					}
 				});
+
+		mView.findViewById(R.id.request_button).setOnClickListener(
+				new OnClickListener() {
+
+					@Override
+					public void onClick(View v) {
+						if (NetworkUtil.isNetworkAvaible(getActivity())) {
+							String message = ((EditText) mView
+									.findViewById(R.id.request_movies_et))
+									.getText().toString();
+							if (!TextUtils.isEmpty(message)) {
+								requestMovie(message);
+							} else {
+								Toast.makeText(getActivity(),
+										"Please type your movie name",
+										Toast.LENGTH_LONG).show();
+							}
+
+						}
+					}
+				});
 		return mView;
+	}
+
+	private void requestMovie(String message) {
+		WebRequest request = new WebRequest(getActivity());
+		request.requestMovie(message, new Listener<String>() {
+
+			@Override
+			public void onResponse(String arg0) {
+				Log.e("RESP", arg0 + "");
+				((EditText) mView.findViewById(R.id.request_movies_et))
+						.setText("");
+				Toast.makeText(getActivity(), "Your request has been sent",
+						Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), "Thanks", Toast.LENGTH_LONG)
+						.show();
+			}
+		}, new ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError arg0) {
+
+			}
+		});
 	}
 
 	public void clearAccountData() {
 		Preference.saveUserId("");
+		Preference.saveUserPassword("");
+		Preference.saveUserName("");
+		Preference.saveUserLastName("");
+		Preference.saveUserGender("");
+		Preference.saveUserPicture("");
 		Session session = Session.getActiveSession();
 		if (session != null)
 			Session.getActiveSession().closeAndClearTokenInformation();

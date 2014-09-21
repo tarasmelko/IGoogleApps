@@ -2,7 +2,13 @@ package com.melko.igoogleapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.facebook.Request;
@@ -36,6 +42,62 @@ public class LoginActivity extends BaseActivity {
 		setContentView(R.layout.login_activity);
 		uiHelper = new UiLifecycleHelper(this, callback);
 		uiHelper.onCreate(savedInstanceState);
+
+		// LoginButton loginBtn = (LoginButton) findViewById(R.id.loginBotton);
+		Button loginEmail = (Button) findViewById(R.id.login_button);
+		final EditText email = (EditText) findViewById(R.id.email);
+		final EditText password = (EditText) findViewById(R.id.password);
+
+		loginEmail.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (TextUtils.isEmpty(email.getText().toString())
+						|| TextUtils.isEmpty(password.getText().toString())) {
+					Toast.makeText(LoginActivity.this, "Input your data",
+							Toast.LENGTH_LONG).show();
+					return;
+				} else {
+					if (!isValidEmail(email.getText().toString())) {
+						Toast.makeText(LoginActivity.this, "Wrong email",
+								Toast.LENGTH_LONG).show();
+					} else {
+						loginWithEmail(email.getText().toString(), password
+								.getText().toString());
+					}
+				}
+
+			}
+		});
+
+	}
+
+	public final static boolean isValidEmail(CharSequence target) {
+		return !TextUtils.isEmpty(target)
+				&& android.util.Patterns.EMAIL_ADDRESS.matcher(target)
+						.matches();
+	}
+
+	private void loginWithEmail(final String email, final String password) {
+		WebRequest request = new WebRequest(this);
+		showProgress();
+		request.loginWithEmail(email, password,
+				new com.android.volley.Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						stopProgress();
+						Log.e("RESPONSE", "resp" + response.toString());
+						if (response != null) {
+							saveEmail(response.toString(), email, password);
+						}
+					}
+				}, new com.android.volley.Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						Log.e("RESPONSE", "error" + error.toString());
+						stopProgress();
+					}
+				});
 	}
 
 	@Override
@@ -157,4 +219,22 @@ public class LoginActivity extends BaseActivity {
 		finish();
 	}
 
+	private void saveEmail(String films, String emails, String passwords) {
+		Preference.saveUserFilms(films);
+		Preference.saveUserEmail(emails);
+		Preference.saveUserPassword(passwords);
+		Intent loginActi = new Intent(LoginActivity.this, MainActivity.class);
+		startActivity(loginActi);
+		finish();
+	}
+
+	public void showProgress() {
+		findViewById(R.id.login_shadow_iv).setVisibility(View.VISIBLE);
+		findViewById(R.id.login_pb).setVisibility(View.VISIBLE);
+	}
+
+	public void stopProgress() {
+		findViewById(R.id.login_shadow_iv).setVisibility(View.GONE);
+		findViewById(R.id.login_pb).setVisibility(View.GONE);
+	}
 }

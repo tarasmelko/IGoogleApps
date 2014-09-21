@@ -3,9 +3,6 @@ package com.melko.igoogleapp.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,7 +14,6 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.facebook.Session;
-import com.google.android.gms.drive.internal.ad;
 import com.melko.igoogleapp.R;
 import com.melko.igoogleapp.adapters.MoviesGridAdapter;
 import com.melko.igoogleapp.models.Movie;
@@ -58,37 +54,66 @@ public class MoviesFragment extends Fragment {
 
 	private void getDataAgain() {
 		showVideoProgress();
-		WebRequest request = new WebRequest(getActivity());
-		request.login(Preference.getUserName(), Preference.getUserLastName(),
-				Preference.getUserGender(), Preference.getUserPictue(),
-				Preference.getUserEmail(),
-				new com.android.volley.Response.Listener<String>() {
-					@Override
-					public void onResponse(String response) {
-						stopVideoProgress();
+		if (Preference.getUserPassword().equals("")) {
+			WebRequest request = new WebRequest(getActivity());
+			request.login(Preference.getUserName(),
+					Preference.getUserLastName(), Preference.getUserGender(),
+					Preference.getUserPictue(), Preference.getUserEmail(),
+					new com.android.volley.Response.Listener<String>() {
+						@Override
+						public void onResponse(String response) {
+							stopVideoProgress();
 
-						if (response != null) {
-							Preference.saveUserFilms(response);
-							try {
-								mData = Parser.feeds(response);
-							} catch (Exception e) {
-								Toast.makeText(getActivity(), "Server error",
-										Toast.LENGTH_SHORT).show();
+							if (response != null) {
+								Preference.saveUserFilms(response);
+								try {
+									mData = Parser.feeds(response);
+								} catch (Exception e) {
+									Toast.makeText(getActivity(),
+											"Server error", Toast.LENGTH_SHORT)
+											.show();
+								}
+								adapter = new MoviesGridAdapter(getActivity(),
+										mData);
+								moviesGrid.setAdapter(adapter);
 							}
-							adapter = new MoviesGridAdapter(getActivity(),
-									mData);
-							moviesGrid.setAdapter(adapter);
 						}
-					}
-				}, new com.android.volley.Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						stopVideoProgress();
-						Log.e("RESPONSE", "error" + error.toString());
-						if (Session.getActiveSession().isOpened())
-							Session.getActiveSession()
-									.closeAndClearTokenInformation();
-					}
-				});
+					}, new com.android.volley.Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+							stopVideoProgress();
+							Log.e("RESPONSE", "error" + error.toString());
+						}
+					});
+		} else {
+			WebRequest request = new WebRequest(getActivity());
+			request.loginWithEmail(Preference.getUserEmail(),
+					Preference.getUserPassword(),
+					new com.android.volley.Response.Listener<String>() {
+						@Override
+						public void onResponse(String response) {
+							stopVideoProgress();
+
+							if (response != null) {
+								Preference.saveUserFilms(response);
+								try {
+									mData = Parser.feeds(response);
+								} catch (Exception e) {
+									Toast.makeText(getActivity(),
+											"Server error", Toast.LENGTH_SHORT)
+											.show();
+								}
+								adapter = new MoviesGridAdapter(getActivity(),
+										mData);
+								moviesGrid.setAdapter(adapter);
+							}
+						}
+					}, new com.android.volley.Response.ErrorListener() {
+						@Override
+						public void onErrorResponse(VolleyError error) {
+							stopVideoProgress();
+						}
+					});
+		}
 	}
 }

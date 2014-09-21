@@ -16,6 +16,7 @@ public class Preference {
 	private static final String USER_GENDER = "gender";
 	private static final String USER_LASTNAME = "lastname";
 	private static final String REG_ID = "reg_id";
+	private static final String PASS = "pass";
 	private static SharedPreferences sharedPreferences = null;
 
 	public static SharedPreferences getSharedPreferences() {
@@ -24,6 +25,16 @@ public class Preference {
 					.getSharedPreferences(PREF, Activity.MODE_PRIVATE);
 		}
 		return sharedPreferences;
+	}
+
+	public synchronized static void saveUserPassword(String userId) {
+		SharedPreferences.Editor editor = getSharedPreferences().edit();
+		editor.putString(PASS, userId);
+		editor.commit();
+	}
+
+	public synchronized static String getUserPassword() {
+		return getSharedPreferences().getString(PASS, "");
 	}
 
 	// id

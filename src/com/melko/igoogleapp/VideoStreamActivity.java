@@ -141,6 +141,7 @@ public class VideoStreamActivity extends BaseActivity {
 	private void showVideoProgress() {
 		findViewById(R.id.fragment_video_streaming_shadow_iv).setVisibility(
 				View.VISIBLE);
+		findViewById(R.id.loading).setVisibility(View.VISIBLE);
 		findViewById(R.id.fragment_video_streaming_pb).setVisibility(
 				View.VISIBLE);
 	}
@@ -148,6 +149,7 @@ public class VideoStreamActivity extends BaseActivity {
 	private void stopVideoProgress() {
 		findViewById(R.id.fragment_video_streaming_shadow_iv).setVisibility(
 				View.GONE);
+		findViewById(R.id.loading).setVisibility(View.GONE);
 		findViewById(R.id.fragment_video_streaming_pb).setVisibility(View.GONE);
 	}
 

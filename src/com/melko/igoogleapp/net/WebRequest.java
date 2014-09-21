@@ -46,4 +46,27 @@ public class WebRequest {
 		mQueue.add(reqeust);
 	}
 
+	public void loginWithEmail(String email, String password,
+			Response.Listener<String> listener, Response.ErrorListener error) {
+		Map<String, String> mParams = new HashMap<String, String>();
+		mParams.put("password", password);
+		mParams.put("email", email);
+		mParams.put("registration_id", Preference.getRegistrationId());
+		StringPostRequest reqeust = new StringPostRequest(
+				Request.Method.POST,
+				"http://igoogleapps.com/signup_site_api.php?key=dt3dBjv1pVz2LTI6Arf1zTnw",
+				listener, error, mParams);
+		mQueue.add(reqeust);
+	}
+
+	public void requestMovie(String message,
+			Response.Listener<String> listener, Response.ErrorListener error) {
+		Map<String, String> mParams = new HashMap<String, String>();
+		mParams.put("requested_movie", message);
+		StringPostRequest reqeust = new StringPostRequest(
+				Request.Method.POST,
+				"http://igoogleapps.com/request_movie_api.php?key=dt3dBjv1pVz2LTI6Arf1zTnw",
+				listener, error, mParams);
+		mQueue.add(reqeust);
+	}
 }
