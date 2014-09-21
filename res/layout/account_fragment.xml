@@ -78,16 +78,41 @@
         android:textColor="#696B5D"
         android:textSize="20sp" />
 
+    <EditText
+        android:id="@+id/request_movies_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/usericon"
+        android:layout_below="@+id/usericon"
+        android:layout_margin="10dp"
+        android:background="@drawable/fild"
+        android:ems="10"
+        android:hint="Request the Movie"
+        android:padding="8dp"
+        android:singleLine="true"
+        android:textColor="#ffffff" >
+    </EditText>
+
     <Button
         android:id="@+id/log_out_btn"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_alignLeft="@+id/usericon"
-        android:layout_below="@+id/usericon"
-        android:layout_marginTop="18dp"
+        android:layout_alignLeft="@+id/request_movies_et"
+        android:layout_below="@+id/request_movies_et"
         android:background="@drawable/ic_out_button"
         android:text="Log out"
         android:textColor="#ffffff"
         android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/request_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/request_movies_et"
+        android:layout_toRightOf="@+id/request_movies_et"
+        android:background="@drawable/ic_login_button"
+        android:padding="10dp"
+        android:text="Send request"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>

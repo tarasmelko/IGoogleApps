@@ -22,7 +22,7 @@
             android:layout_height="50dp"
             android:background="@android:color/transparent"
             android:padding="10dp"
-            android:text="@string/movies_tv"
+            android:text="Movies"
             android:textColor="#3AA2D0"
             android:textSize="22sp"
             android:textStyle="bold" />
