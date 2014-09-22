@@ -1,5 +1,6 @@
 package com.melko.igoogleapp.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -107,9 +108,7 @@ public class AccountFragment extends Fragment {
 		Preference.saveUserLastName("");
 		Preference.saveUserGender("");
 		Preference.saveUserPicture("");
-		Session session = Session.getActiveSession();
-		if (session != null)
-			Session.getActiveSession().closeAndClearTokenInformation();
+		callFacebookLogout(getActivity());
 	}
 
 	@Override
@@ -148,6 +147,25 @@ public class AccountFragment extends Fragment {
 			((TextView) mView.findViewById(R.id.email)).setText(Preference
 					.getUserEmail());
 			super.onPostExecute(result);
+		}
+
+	}
+
+	public static void callFacebookLogout(Context context) {
+		Session session = Session.getActiveSession();
+		if (session != null) {
+
+			if (!session.isClosed()) {
+				session.closeAndClearTokenInformation();
+				// clear your preferences if saved
+			}
+		} else {
+
+			session = new Session(context);
+			Session.setActiveSession(session);
+
+			session.closeAndClearTokenInformation();
+			// clear your preferences if saved
 		}
 
 	}

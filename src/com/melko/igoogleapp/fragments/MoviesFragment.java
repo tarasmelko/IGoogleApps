@@ -13,7 +13,9 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.facebook.Session;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshGridView;
 import com.melko.igoogleapp.R;
 import com.melko.igoogleapp.adapters.MoviesGridAdapter;
 import com.melko.igoogleapp.models.Movie;
@@ -24,7 +26,7 @@ import com.melko.igoogleapp.utils.Preference;
 
 public class MoviesFragment extends Fragment {
 
-	GridView moviesGrid;
+	PullToRefreshGridView moviesGrid;
 	List<Movie> mData;
 	MoviesGridAdapter adapter;
 	View mView;
@@ -34,7 +36,18 @@ public class MoviesFragment extends Fragment {
 			Bundle savedInstanceState) {
 		mView = inflater.inflate(R.layout.movies_fragment, container, false);
 
-		moviesGrid = (GridView) mView.findViewById(R.id.fragment_movie_gv);
+		moviesGrid = (PullToRefreshGridView) mView
+				.findViewById(R.id.fragment_movie_gv);
+		moviesGrid.setMode(PullToRefreshBase.Mode.BOTH);
+		moviesGrid.setOnRefreshListener(new OnRefreshListener<GridView>() {
+
+			@Override
+			public void onRefresh(PullToRefreshBase<GridView> refreshView) {
+				if (NetworkUtil.isNetworkAvaible(getActivity()))
+					getDataAgain();
+			}
+		});
+
 		mData = new ArrayList<Movie>();
 
 		if (NetworkUtil.isNetworkAvaible(getActivity()))
@@ -63,7 +76,7 @@ public class MoviesFragment extends Fragment {
 						@Override
 						public void onResponse(String response) {
 							stopVideoProgress();
-
+							moviesGrid.onRefreshComplete();
 							if (response != null) {
 								Preference.saveUserFilms(response);
 								try {
@@ -82,6 +95,7 @@ public class MoviesFragment extends Fragment {
 						@Override
 						public void onErrorResponse(VolleyError error) {
 							stopVideoProgress();
+							moviesGrid.onRefreshComplete();
 							Log.e("RESPONSE", "error" + error.toString());
 						}
 					});
@@ -93,7 +107,7 @@ public class MoviesFragment extends Fragment {
 						@Override
 						public void onResponse(String response) {
 							stopVideoProgress();
-
+							moviesGrid.onRefreshComplete();
 							if (response != null) {
 								Preference.saveUserFilms(response);
 								try {
@@ -111,6 +125,7 @@ public class MoviesFragment extends Fragment {
 					}, new com.android.volley.Response.ErrorListener() {
 						@Override
 						public void onErrorResponse(VolleyError error) {
+							moviesGrid.onRefreshComplete();
 							stopVideoProgress();
 						}
 					});

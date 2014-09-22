@@ -220,6 +220,7 @@ public class LoginActivity extends BaseActivity {
 	}
 
 	private void saveEmail(String films, String emails, String passwords) {
+		Preference.saveUserId("logged");
 		Preference.saveUserFilms(films);
 		Preference.saveUserEmail(emails);
 		Preference.saveUserPassword(passwords);
