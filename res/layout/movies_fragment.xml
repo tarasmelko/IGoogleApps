@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:background="#323232" >
 
-    <GridView
+    <com.handmark.pulltorefresh.library.PullToRefreshGridView
         android:id="@+id/fragment_movie_gv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -11,7 +11,7 @@
         android:horizontalSpacing="5dp"
         android:numColumns="4"
         android:verticalSpacing="5dp" >
-    </GridView>
+    </com.handmark.pulltorefresh.library.PullToRefreshGridView>
 
     <ImageView
         android:id="@+id/main_shadow_iv"
