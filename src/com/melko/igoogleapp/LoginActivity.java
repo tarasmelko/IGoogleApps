@@ -1,9 +1,14 @@
 package com.melko.igoogleapp;
 
+import java.util.regex.Pattern;
+
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -42,12 +47,21 @@ public class LoginActivity extends BaseActivity {
 		setContentView(R.layout.login_activity);
 		uiHelper = new UiLifecycleHelper(this, callback);
 		uiHelper.onCreate(savedInstanceState);
+		String possibleEmail = null;
+		Pattern emailPattern = Patterns.EMAIL_ADDRESS; // API level 8+
+		Account[] accounts = AccountManager.get(this).getAccounts();
+		for (Account account : accounts) {
+			if (emailPattern.matcher(account.name).matches()) {
+				possibleEmail = account.name;
+			}
+		}
 
 		// LoginButton loginBtn = (LoginButton) findViewById(R.id.loginBotton);
 		Button loginEmail = (Button) findViewById(R.id.login_button);
 		final EditText email = (EditText) findViewById(R.id.email);
 		final EditText password = (EditText) findViewById(R.id.password);
-
+		if (possibleEmail != null)
+			email.setText(possibleEmail);
 		loginEmail.setOnClickListener(new OnClickListener() {
 
 			@Override
