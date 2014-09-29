@@ -8,6 +8,6 @@
     <dimen name="icon_width">200dp</dimen>
     <dimen name="login_margin">16dp</dimen>
     <dimen name="or_margin">20dp</dimen>
-    <dimen name="text_login_margin">20dp</dimen>
+    <dimen name="text_login_margin">50dp</dimen>
 
 </resources>
